@@ -1,14 +1,19 @@
+Feature: Login Functionality
 
-Feature: Fungsionalitas Login
-  Sebagai pengguna
-  Saya ingin mengakses akun saya melalui halaman login
-  Agar saya dapat menggunakan fitur-fitur sistem
+  Scenario: Login berhasil dengan kredensial valid
+    Given Saya berada di halaman utama aplikasi
+    When Saya klik tombol login di halaman utama
+    Then Saya seharusnya diarahkan ke halaman login
+    When Saya memasukkan email "mahasiswa@mail.ugm.ac.id"
+    And Saya memasukkan password "ABCD1234"
+    And Saya klik tombol submit login
+    Then Saya seharusnya berhasil login
 
-  Scenario: Login berhasil dengan kredensial yang valid
-    Given Saya berada di halaman utama
-    When Saya mengklik tombol login
-    Then Saya akan diarahkan ke halaman login
-    When Saya memasukkan "mahasiswa@mail.ugm.ac.id" sebagai email
-    And Saya memasukkan "ABCD1234" sebagai password
-    And Saya mengklik tombol submit login
-    Then Saya berhasil masuk ke sistem
+  Scenario: Login gagal dengan password tidak valid
+    Given Saya berada di halaman utama aplikasi
+    When Saya klik tombol login di halaman utama
+    Then Saya seharusnya diarahkan ke halaman login
+    When Saya memasukkan email "mahasiswa@mail.ugm.ac.id"
+    And Saya memasukkan password "passwordSalah"
+    And Saya klik tombol submit login
+    Then Saya seharusnya melihat pesan error login
