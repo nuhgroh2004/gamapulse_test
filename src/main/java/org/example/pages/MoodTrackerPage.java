@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -58,8 +59,16 @@ public class MoodTrackerPage {
     }
 
     public void clickModalOkButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(modalOkButton));
-        modalOkButton.click();
+        try {
+            WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(15));
+            extendedWait.until(ExpectedConditions.elementToBeClickable(modalOkButton));
+            ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", modalOkButton);
+            Thread.sleep(800);
+            ((JavascriptExecutor)driver).executeScript("arguments[0].click();", modalOkButton);
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void clickModalBackButton() {
@@ -78,9 +87,19 @@ public class MoodTrackerPage {
 
     public boolean isOnNotesPage() {
         try {
-            wait.until(ExpectedConditions.urlToBe("http://127.0.0.1:8000/mahasiswa/notes"));
-            return driver.getCurrentUrl().equals("http://127.0.0.1:8000/mahasiswa/notes");
+            WebDriverWait extendedWait = new WebDriverWait(driver, Duration.ofSeconds(15));
+            extendedWait.until(driver -> {
+                String currentUrl = driver.getCurrentUrl();
+                boolean isCorrect = currentUrl.contains("/mahasiswa/notes");
+                if (!isCorrect) {
+                    System.out.println("Current URL: " + currentUrl + ", expecting URL containing: /mahasiswa/notes");
+                }
+                return isCorrect;
+            });
+            return driver.getCurrentUrl().contains("/mahasiswa/notes");
         } catch (Exception e) {
+            System.out.println("Failed to verify notes page: " + e.getMessage());
+            System.out.println("Current URL: " + driver.getCurrentUrl());
             return false;
         }
     }

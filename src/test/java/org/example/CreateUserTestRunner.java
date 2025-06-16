@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features/createUser.feature",
+        features = "src/test/resources/features/05_createUser.feature",
         glue = {"org.example.stepdefinitions"},
         plugin = {"pretty", "html:target/cucumber/create-user-report.html"},
         monochrome = true

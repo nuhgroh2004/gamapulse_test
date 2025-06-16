@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/features/permissionRequest.feature",
+        features = "src/test/resources/features/06_permissionRequest.feature",
         glue = {"org.example.stepdefinitions"},
         plugin = {"pretty", "html:target/cucumber/permission-request-report.html"},
         monochrome = true
