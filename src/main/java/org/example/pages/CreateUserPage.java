@@ -51,7 +51,11 @@ public class CreateUserPage {
         String id = field + "-" + index;
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
         element.clear();
-        element.sendKeys(value);
+        if (value != null && !value.equals("[empty]")) {
+            element.sendKeys(value);
+        } else {
+            element.click();
+        }
     }
 
     public void selectRoleMahasiswa() {
@@ -90,4 +94,30 @@ public class CreateUserPage {
             return false;
         }
     }
+
+    public boolean isAlertVisible() {
+        try {
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
+            WebElement alert = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[contains(@class, 'alert') or contains(@class, 'modal') or contains(@role, 'alert')]")
+            ));
+            return alert.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isFieldFocused(String fieldName) {
+        try {
+            String id = fieldName + "-0";
+            WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.id(id)));
+            WebElement activeElement = driver.switchTo().activeElement();
+            return element.equals(activeElement);
+        } catch (Exception e) {
+            System.out.println("Error checking if field " + fieldName + " is focused: " + e.getMessage());
+            return false;
+        }
+    }
+
+
 }
