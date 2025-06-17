@@ -14,3 +14,8 @@ pada project pilih menu import data
 untuk konfigurasi importnya seperti pada gambar di bawah
 ![image](https://github.com/user-attachments/assets/037c9512-087b-4bae-b054-cc7ced95c0ad)
 
+
+
+atau bisa akses link ini https://app.qase.io/project/GWA
+
+
